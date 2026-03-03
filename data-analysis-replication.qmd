@@ -1,0 +1,11 @@
+---
+title: "data-analysis-replication"
+format: html
+editor: visual
+---
+
+# Data Analysis Replication Project
+
+## Introduction
+
+This project aims to replicate the analysis done in Ciesielski *et al*., 2025 (<https://doi.org/10.3390/jmse13112065>). The original paper aims to
