@@ -8,4 +8,20 @@ editor: visual
 
 ## Introduction
 
-This project aims to replicate the analysis done in Ciesielski *et al*., 2025 (<https://doi.org/10.3390/jmse13112065>). The original paper aims to
+This project aims to replicate the analysis done in Ciesielski *et al*., 2025 (<https://doi.org/10.3390/jmse13112065>). The original paper aims to examine spatial differences in micro- and nano- plastic composition in selectively-filtering oysters and subsequently colonized water ways. Micro- and nano- plastics are becoming of rising concern in public health fields as environmental presence is becoming more apparent as well as potential bioaccumulative properties.
+
+Oysters, a large industry in the Gulf region, particularly the Texas coast, are selective filter feeders capable of consuming particular material and expelling other matter via pseudo-feces. Significant questions have been raised as 1) Texas coastal waters, due to physical oceanographic processes, have higher concentrations compared to other global coastal regions and 2) oysters have been shown to selectively filter certain plastics from the waters they are inhabitating leading to interesting relationships between plastic concentrations in and out of oysters.
+
+This study uses three separate methods of analysis in order to determine oyster health and plastic chemistry/quantity in sites across Galveston Bay, a major industrial region.
+
+1.  Condition Index: a measure of health for oysters that examines soft tissue to overall size
+
+    1.  This was accomplished by shucking the oyster, drying the meat, and measuring followed by a calculation of the internal shell cavity volume (difference in weight between the whole oyster and the weight of the dried empty shell
+
+        Formula:
+
+        $$
+        CI = dry meat weight (g)/ internal shell cavity volume (cm^3
+        ) * 100$$
+
+    2.  Microplastic Analysis with an Olympus DP27 stereo microscope and camera
