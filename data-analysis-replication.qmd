@@ -12,6 +12,8 @@ This project aims to replicate the analysis done in Ciesielski *et al*., 2025 (<
 
 Oysters, a large industry in the Gulf region, particularly the Texas coast, are selective filter feeders capable of consuming particular material and expelling other matter via pseudo-feces. Significant questions have been raised as 1) Texas coastal waters, due to physical oceanographic processes, have higher concentrations compared to other global coastal regions and 2) oysters have been shown to selectively filter certain plastics from the waters they are inhabitating leading to interesting relationships between plastic concentrations in and out of oysters.
 
+#### Analyses Conducted
+
 This study uses three separate methods of analysis in order to determine oyster health and plastic chemistry/quantity in sites across Galveston Bay, a major industrial region.
 
 1.  Condition Index: a measure of health for oysters that examines soft tissue to overall size
@@ -25,3 +27,55 @@ This study uses three separate methods of analysis in order to determine oyster 
         ) * 100$$
 
     2.  Microplastic Analysis with an Olympus DP27 stereo microscope and camera
+
+        1.  Water and oyster samples were filtered to capture suspected plastic particles
+
+        2.  Each particle was categorized by color and type (e.g. fiber, fragment, film, sphere)
+
+        3.  A randomized subset of samples containing 10% of all particles were chosen using a random number table and imaged under microscopy
+
+        4.  The longest length was measured and the subsequent mass was calculated using average density and diameter
+
+        5.  From here, measurements of oysters were incorporated to estimate overall concentration of particles per oyster, finding it to be 8% of total oyster mass
+
+    3.  Microplastic Analysis with Spectroscopy
+
+        1.  attenuated total reflectance-Fourier-transform infared (ATR-FTIR) spectroscopy
+
+            1.  Microplastic characterization using ATR-FTIR spectra to examine general concentrations present in each sample site
+
+        2.  pyrolysis-gas chromatography-mass spectrometry with tandem mass (Py-GCMS/MS) spectrometry
+
+            1.  Measures specific mass per particle per sample
+
+#### Data Collection and Utilization
+
+Samples were taken from six total sites broken down as the following:
+
+-   Christmas Bay: surface water collection & oysters collected for CI measurements and chemical analysis of microplastics
+
+-   West Bay: surface water collection & oysters collected for CI measurements
+
+-   East Bay: surface water collection & oysters collected for CI measurements and chemical analysis of microplastics
+
+-   Central Bay: water collection for chemical analysis & oysters collected for chemical analysis of microplastics
+
+-   Upper Bay: water collection for chemical analysis
+
+-   Trinity Bay: surface water collection
+
+#### Conclusions of the Original Study 
+
+Results find that water system carried primarily fibers and oysters had an order of magnitude higher of fiber particles that other microplastic particles. The highest abundance of color fragment was clear by large margins, followed by black and blue.
+
+Chemical composition analyses found that surface waters contained higher volumes of polyamide and polypropylene were more common in upper regions of the bay while ethylene propylene and polyethylene terephthalate were more common in the lower regions of the bay. There appeared to be four distinct plastic types found across the bay: polypropylenem nylon 66m polyethylenem and stryene butadeiene, with polyethylene and styrene butadiene (rubber) making up \~20% of microplastic load in oyster samples. This supports previous hypotheses that oysters will selectively filter different plastic particles.
+
+Condition Index of oysters found significant differences across sampled reefs with significantly higher oyster CI (theoretically healthier) in East Bay compared to West Bay and Christmas Bay.
+
+## Data Analysis and Visualization Replications
+
+### 3.1 - Water Quality
+
+```{r}
+
+```
