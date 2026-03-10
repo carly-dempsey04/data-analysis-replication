@@ -64,7 +64,7 @@ Samples were taken from six total sites broken down as the following:
 
 -   Trinity Bay: surface water collection
 
-#### Conclusions of the Original Study 
+#### Conclusions of the Original Study
 
 Results find that water system carried primarily fibers and oysters had an order of magnitude higher of fiber particles that other microplastic particles. The highest abundance of color fragment was clear by large margins, followed by black and blue.
 
@@ -93,3 +93,5 @@ wq1 <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis
 
 skim(wq1)
 ```
+
+Pearon's r code module 18 - \> cor(x, y, method = "pearson")
