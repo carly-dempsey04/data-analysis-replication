@@ -74,8 +74,22 @@ Condition Index of oysters found significant differences across sampled reefs wi
 
 ## Data Analysis and Visualization Replications
 
+### Preliminary
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(lme4)
+library(skimr)
+
+
+```
+
 ### 3.1 - Water Quality
 
 ```{r}
+#Reading in water quality data from raw github file
+wq1 <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_CI.csv")
 
+skim(wq1)
 ```
