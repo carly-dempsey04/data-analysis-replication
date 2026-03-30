@@ -89,9 +89,89 @@ library(skimr)
 
 ```{r}
 #Reading in water quality data from raw github file
-wq1 <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_CI.csv")
+wq <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_waterquality.csv")
 
-skim(wq1)
+#Creating a preliminary table with the data
+Table2_prelim <- wq %>%
+  group_by(Location) %>%
+  summarise(
+    sal_mean = mean(salinity, na.rm = TRUE),
+    sal_sd = sd(salinity, na.rm = TRUE),
+    temp_mean = mean(temp, na.rm = TRUE),
+    temp_sd = sd(temp, na.rm = TRUE),
+    DO_mean = mean(DO, na.rm = TRUE),
+    DO_sd = sd(DO, na.rm = TRUE),
+    depth_mean = mean(depth, na.rm = TRUE),
+    depth_sd   = sd(depth, na.rm = TRUE)
+  )
+
+#Creating a final table for the data
+Table2 <- Table2 %>%
+  mutate(Salinity = paste0(round(sal_mean, 2), " ± ", round(sal_sd, 2)),
+  Temperature = paste0(round(temp_mean, 2), " ± ", round(temp_sd, 2)),
+  DO = paste0(round(DO_mean, 2), " ± ", round(DO_sd, 2)),
+  Depth = paste0(round(depth_mean, 2), " ± ", round(depth_sd, 2))
+  ) %>%
+  select(Location, Salinity, Temperature, DO, Depth)
+
+##NOTE: dataset did not include Christmas Bay water quality collection, which is found on Table 2 of the original publication
+
+```
+
+### 3.2 Oyster Condition Index Across Sites
+
+```{r}
+oysterci <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_CI.csv")
+#The easy shit
+base_d <- oysterci %>%
+  group_by(Location) %>%
+  summarise(mean_CI = mean(CI, na.rm = TRUE), se_CI = sd(CI, na.rm = TRUE) / sqrt(n()), n = n())
+
+#STUCK - WHERE TO PICK UP
+anova_CI <- aov(CI ~ Location, data = oysterci)
+snk_CI <- SNK.test(anova_model, "Location", group = TRUE)
+#Actually need to use the letters
+snk_CI_letters <- snk$groups %>%
+  rownames_to_column("Location") %>%
+  rename(letter = groups)
+
+#Finally using my joins
+plot_df <- anova_CI %>%
+  left_join(snk_CI_letters, by = "Location")
+
+#THis better work
+ggplot(plot_df, aes(x = Location, y = mean_CI)) +
+  geom_col(fill = "gray70") +
+  geom_errorbar(aes(ymin = mean_CI - se_CI, ymax = mean_CI + se_CI),
+    width = 0.2) +
+  geom_text(aes(label = paste0("n = ", n)),
+    vjust = 1.5,
+    color = "black",
+    size = 4) +
+  geom_text(aes(label = letter, y = mean_CI + se_CI + 0.05),
+    size = 5) +
+  labs(x = "Sampling Location", y = "mean oyster condition index") +
+  theme_classic()
+
+
+```
+
+### 3.3 Microplastic Counts
+
+Microplastic Counts in Water Blanks
+
+```{r}
+mp_wb <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_MPcount.csv")
+head(mp_wb)
+
+
+```
+
+Microplastic Counts in Oyster Tissue
+
+```{r}
+mp_ot <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_MPmeasure.csv")
+
 ```
 
 Pearon's r code module 18 - \> cor(x, y, method = "pearson")
