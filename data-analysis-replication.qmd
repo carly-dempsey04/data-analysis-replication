@@ -6,13 +6,13 @@ editor: visual
 
 # Data Analysis Replication Project
 
-## Introduction
+## 1. 0 - Introduction
 
 This project aims to replicate the analysis done in Ciesielski *et al*., 2025 (<https://doi.org/10.3390/jmse13112065>). The original paper aims to examine spatial differences in micro- and nano- plastic composition in selectively-filtering oysters and subsequently colonized water ways. Micro- and nano- plastics are becoming of rising concern in public health fields as environmental presence is becoming more apparent as well as potential bioaccumulative properties.
 
 Oysters, a large industry in the Gulf region, particularly the Texas coast, are selective filter feeders capable of consuming particular material and expelling other matter via pseudo-feces. Significant questions have been raised as 1) Texas coastal waters, due to physical oceanographic processes, have higher concentrations compared to other global coastal regions and 2) oysters have been shown to selectively filter certain plastics from the waters they are inhabitating leading to interesting relationships between plastic concentrations in and out of oysters.
 
-#### Analyses Conducted
+#### 1.1 - Analyses Conducted
 
 This study uses three separate methods of analysis in order to determine oyster health and plastic chemistry/quantity in sites across Galveston Bay, a major industrial region.
 
@@ -48,7 +48,7 @@ This study uses three separate methods of analysis in order to determine oyster 
 
             1.  Measures specific mass per particle per sample
 
-#### Data Collection and Utilization
+#### 1.2 - Data Collection and Utilization
 
 Samples were taken from six total sites broken down as the following:
 
@@ -64,7 +64,7 @@ Samples were taken from six total sites broken down as the following:
 
 -   Trinity Bay: surface water collection
 
-#### Conclusions of the Original Study
+#### 1.3 - Conclusions of the Original Study
 
 Results find that water system carried primarily fibers and oysters had an order of magnitude higher of fiber particles that other microplastic particles. The highest abundance of color fragment was clear by large margins, followed by black and blue.
 
@@ -72,20 +72,22 @@ Chemical composition analyses found that surface waters contained higher volumes
 
 Condition Index of oysters found significant differences across sampled reefs with significantly higher oyster CI (theoretically healthier) in East Bay compared to West Bay and Christmas Bay.
 
-## Data Analysis and Visualization Replications
+## 2.0 - Data Analysis and Visualization Replications
 
-### Preliminary
+### 2.1 - Preliminary
 
 ```{r}
+#Adding necessary pacakges to my library
 library(tidyverse)
 library(ggplot2)
 library(lme4)
 library(skimr)
-
-
+library(agricolae)
+library(dplyr)
+library(car)
 ```
 
-### 3.1 - Water Quality
+### 2.2 - Water Quality (Table 2)
 
 ```{r}
 #Reading in water quality data from raw github file
@@ -104,6 +106,7 @@ Table2_prelim <- wq %>%
     depth_mean = mean(depth, na.rm = TRUE),
     depth_sd   = sd(depth, na.rm = TRUE)
   )
+Head(Table2_prelim)
 
 #Creating a final table for the data
 Table2 <- Table2 %>%
@@ -113,65 +116,242 @@ Table2 <- Table2 %>%
   Depth = paste0(round(depth_mean, 2), " ± ", round(depth_sd, 2))
   ) %>%
   select(Location, Salinity, Temperature, DO, Depth)
-
+head(Table2)
 ##NOTE: dataset did not include Christmas Bay water quality collection, which is found on Table 2 of the original publication
-
 ```
 
-### 3.2 Oyster Condition Index Across Sites
+Output Conclusion:
+
+Replication of table 2 that shows water conditions across the different locations as follows: Dickinson (Cbay), East Bay (Ebay), Kemah (Ubay), Trinity Bay (Tbay), West Bay (Wbay). Christmas Bay (Xbay) is included on the original publication and yet the excel files associated do not contain data from this location. This is likely due to Xbay being an embankment of East Bay leading the conditions to be combined. Although this is an understandable filing, it does complicate replication.
+
+### 2.3 -  Oyster Condition Index Across Sites
+
+#### 2.3.0 - Preliminaries
 
 ```{r}
+#Loading in my csv containing oyster condition index values
 oysterci <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_CI.csv")
-#The easy shit
+
+#Building the framework tibble for the analyses including mean CI & standard deviation all grouped by site location
 base_d <- oysterci %>%
   group_by(Location) %>%
   summarise(mean_CI = mean(CI, na.rm = TRUE), se_CI = sd(CI, na.rm = TRUE) / sqrt(n()), n = n())
+class(base_d) #double checking class for left joining
+```
 
-#STUCK - WHERE TO PICK UP
-anova_CI <- aov(CI ~ Location, data = oysterci)
-snk_CI <- SNK.test(anova_model, "Location", group = TRUE)
-#Actually need to use the letters
-snk_CI_letters <- snk$groups %>%
+#### 2.3.1 - Oyster Conditions Index Values by Sampling Location (Figure 2)
+
+```{r}
+#Running my ANOVA followed by the student newman post-hoc test
+(lm_CI <- lm(CI ~ Location, data = oysterci))
+(anova_CI <- aov(CI ~ Location, data = oysterci))
+(snk_CI <- SNK.test(anova_CI, "Location", group = TRUE))
+
+#Pulling the values from the SNK post-hoc test 
+snk_CI_letters <- snk_CI$groups %>%
   rownames_to_column("Location") %>%
   rename(letter = groups)
+class(snk_CI_letters) #double checking class for left joining
 
-#Finally using my joins
-plot_df <- anova_CI %>%
+#Finally using my joins - connecting my base data to the SNK post-hoc
+plot_df <- base_d %>%
   left_join(snk_CI_letters, by = "Location")
 
-#THis better work
+#THis better work - plotting according to figure 2
 ggplot(plot_df, aes(x = Location, y = mean_CI)) +
-  geom_col(fill = "gray70") +
+  geom_col(fill = "pink") +
   geom_errorbar(aes(ymin = mean_CI - se_CI, ymax = mean_CI + se_CI),
     width = 0.2) +
-  geom_text(aes(label = paste0("n = ", n)),
+  geom_text(aes(label = paste0(n)),
     vjust = 1.5,
-    color = "black",
+    color = "#000080",
+    position = "jitter",
     size = 4) +
   geom_text(aes(label = letter, y = mean_CI + se_CI + 0.05),
-    size = 5) +
-  labs(x = "Sampling Location", y = "mean oyster condition index") +
-  theme_classic()
+    size = 5,
+    color = "#000080") +
+  labs(x = "Sampling Location", y = "mean oyster condition index")
 
-
+#Comparing to the publication figure
+knitr::include_graphics("images/imagename.filetype")
 ```
 
-### 3.3 Microplastic Counts
+Output Conclusion:
 
-Microplastic Counts in Water Blanks
+This boxplot, replicating Figure 2 of the original publication, contains the Oyster Condition Index values (mean & sd) from six sampled oyster reefs (two in Ebay, three in WBay, and three in XBay). Plot additional statistics (error bars, replicate number, and statistical difference) all match original publication results (but prettier colors)
+
+### 2.4 -  Microplastic Counts
+
+#### 2.4.0 - Preliminaries
 
 ```{r}
-mp_wb <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_MPcount.csv")
-head(mp_wb)
-
-
+#Loading in my csv that contains all the microplastic measurement information
+mp_counts <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_MPmeasure.csv")
 ```
 
-Microplastic Counts in Oyster Tissue
+#### 2.4.1 - Microplastic Counts in Water Blanks (Figure 3a)
 
 ```{r}
-mp_ot <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_MPmeasure.csv")
+#Creating a new tibble that filters for all water blank samples and creates a column for the amount of microplastic samples found based on each site region
+mp_wb <- mp_counts %>%
+  filter(Sample_type == "waterblank") %>%
+  select(Region, Sample_ID) %>%
+  group_by(Region, Sample_ID) %>%
+  summarise(Microplastic_Count = n(), .groups = "drop")
+
+#Creating figure __
+ggplot(mp_wb, aes(x = Region, y = log(Microplastic_Count), fill = Region)) +
+  geom_boxplot(
+    outlier.shape = 10,
+    outlier.size = 4) +
+  scale_fill_brewer(palette = "Set3") +  
+  labs(
+    title = "Microplastic Counts of Water Blanks by Region",
+    x = "Region",
+    y = "Microplastic Count per Sample") +
+  theme_minimal()
+
+#Comparing to the publication figure
+knitr::include_graphics("images/imagename.filetype")
+```
+
+Output Conclusions:
+
+#### 2.4.2 - Microplastic Counts in Oyster Blanks (Figure 3b)
+
+```{r}
+#Creating a new tibble that filters for all oyster blank samples and creates a column for the amount of microplastic samples found based on each site region
+mp_ob <- mp_counts %>%
+  filter(Sample_type == "oysterblank", na.rm = TRUE) %>%
+  select(Region, Sample_ID) %>%
+  group_by(Region, Sample_ID) %>%
+  summarise(Microplastic_Count = n(), .groups = "drop")
+
+#Creating figure __
+ggplot(mp_ob, aes(x = Region, y = log(Microplastic_Count), fill = Region)) +
+  geom_boxplot(
+    outlier.shape = 10,
+    outlier.size = 4)
+  scale_fill_brewer(palette = "Set3") +  
+  labs(
+    title = "Microplastic Counts of Oyster Blanks by Region",
+    x = "Region",
+    y = "Microplastic Count per Sample") +
+  theme_minimal()
+#Comparing to the publication figure
+knitr::include_graphics("images/imagename.filetype")
+```
+
+#### 2.4.3 - Microplastic Counts in Oyster Tissue
+
+```{r}
+table3 <- mp_counts %>%
+  arrange(MP_color)
+  group_by(Sample_Type == "")
 
 ```
+
+#### 2.4.4 - Microplastic Counts in Surface Water Samples
+
+```{r}
+#Creating a new tibble that filters for all surface water samples and creates a column for the amount of microplastic samples found based on each site region
+Figure4a <- mp_counts %>%
+  filter(Sample_type == "water", na.rm = TRUE) %>%
+  select(Region, Sample_ID) %>%
+  group_by(Region, Sample_ID) %>%
+  summarise(Microplastic_Count = n(), .groups = "drop")
+
+#Creating figure 4a
+ggplot(Figure4a, aes(x = Region, y = log(Microplastic_Count))) +
+  geom_boxplot(
+    outlier.shape = 10,
+    outlier.size = 4) +
+  labs(
+    title = "Microplastic Counts of Surface Water Samples",
+    y = "Microplastic Count") +
+  theme_minimal()
+
+##Creating a new tibble that filters for surface water samples and creates a column for the amount of fiber microplastic samples found based on each site region
+Figure4b <- mp_counts %>%
+  filter(Sample_type == "water" & MP_category == "fiber") %>%
+  select(Region, Sample_ID) %>%
+  group_by(Region, Sample_ID) %>%
+  summarise(Microplastic_Count = n(), .groups = "drop")
+
+#Creating figure 4b
+ggplot(Figure4b, aes(x = Region, y = log(Microplastic_Count))) +
+  geom_boxplot(
+    fill = "yellow",
+    outlier.shape = 10,
+    outlier.size = 4) +
+  labs(
+    title = "Fiber MP Counts of Surface Water Samples",
+    y = "Microplastic Count") +
+  theme_minimal()
+
+#Creating a new tibble that filters for surface water samples and creates a column for the amount of fragment, film, and fiber bundle microplastic samples found based on each site region
+Figure4c <- mp_counts %>%
+  filter(Sample_type == "water" & MP_category %in% c("fragment", "film", "fiber bundle")) %>%
+  select(Region, Sample_ID) %>%
+  group_by(Region, Sample_ID) %>%
+  summarise(Microplastic_Count = n(), .groups = "drop")
+
+#Creating figure 4c
+ggplot(Figure4c, aes(x = Region, y = log(Microplastic_Count), fill = MP_category)) +
+  geom_boxplot(
+    fill = "#000080",
+    outlier.shape = 10,
+    outlier.size = 4) +
+  labs(
+    title = "Fragment, Film, and Fiber Bundle Counts of Surface Water Samples",
+    y = "Microplastic Count")
+```
+
+#### 2.4.5 - Microplastic Counts in Oyster Tissue Samples
+
+```{r}
+
+```
+
+It was noted in the original publication that "MP counts were adjusted using these blanks, which were calculated by subtracting the mean number of plastics in procedural controls for each color-type category from the oyster totals for that round before analysis. "
+
+### 2.5 -  Microplastic Chemical Concentration and Composition
+
+#### 2.5.0 - Preliminaries
+
+```{r}
+#Loading in my csv that contains all the microplastic PGYCMS/MS information
+PYGCMSMS <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_PyGCMSMS.csv")
+```
+
+#### 2.5.1 - 
+
+```{r}
+##Creating a  tibble that includes location, dry weight (g), and chemical concentrations tested and creating a new column that adds chemical concentrations for each oyster sample
+Figure7 <- PYGCMSMS %>%
+  select(Location, Dry_weight_g, PMMA, PP, PVC, PA, PC, N66, PE, PET, ABS, PUR, RUBBER, PS) %>%
+  mutate("ug" = PMMA + PP + PVC + PA + PC + N66 + PE + PET + ABS + PUR + RUBBER + PS) %>%
+  group_by(Location)
+
+#Creating figure 7a
+ggplot(Figure7, aes(x = Location, y = ug)) +
+  geom_boxplot(
+    outlier.shape = 10,
+    outlier.size = 4) +
+  labs(
+    title = "Concentration of MP in Oyster Tissue",
+    y = "Concentration (ug/ g DW") 
+  
+#Creating figure 7b
+ggplot(Figure7, aes(x = c("PMMA + PP + PVC + PA + PC + N66 + PE + PET + ABS + PUR + RUBBER + PS"), y = ))
+```
+
+## 3.0 - Discussion and Reflection
+
+### 3.1 - Summary
+
+### 3.2 - Challenges Encountered
+
+### 3.3 - Differing Conclusions
 
 Pearon's r code module 18 - \> cor(x, y, method = "pearson")
