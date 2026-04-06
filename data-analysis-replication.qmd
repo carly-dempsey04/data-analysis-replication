@@ -106,7 +106,7 @@ Table2_prelim <- wq %>%
     depth_mean = mean(depth, na.rm = TRUE),
     depth_sd   = sd(depth, na.rm = TRUE)
   )
-Head(Table2_prelim)
+head(Table2_prelim)
 
 #Creating a final table for the data
 Table2 <- Table2 %>%
@@ -173,7 +173,7 @@ ggplot(plot_df, aes(x = Location, y = mean_CI)) +
   labs(x = "Sampling Location", y = "mean oyster condition index")
 
 #Comparing to the publication figure
-knitr::include_graphics("images/imagename.filetype")
+knitr::include_graphics("images/DataAnalytics_figure2.jpg")
 ```
 
 Output Conclusion:
@@ -199,7 +199,7 @@ mp_wb <- mp_counts %>%
   group_by(Region, Sample_ID) %>%
   summarise(Microplastic_Count = n(), .groups = "drop")
 
-#Creating figure __
+#Creating figure 3a
 ggplot(mp_wb, aes(x = Region, y = log(Microplastic_Count), fill = Region)) +
   geom_boxplot(
     outlier.shape = 10,
@@ -207,15 +207,17 @@ ggplot(mp_wb, aes(x = Region, y = log(Microplastic_Count), fill = Region)) +
   scale_fill_brewer(palette = "Set3") +  
   labs(
     title = "Microplastic Counts of Water Blanks by Region",
-    x = "Region",
+    x = "Site",
     y = "Microplastic Count per Sample") +
   theme_minimal()
 
 #Comparing to the publication figure
-knitr::include_graphics("images/imagename.filetype")
+knitr::include_graphics("images/DataAnalytics_figure3.jpg")
 ```
 
 Output Conclusions:
+
+Figure appears comparable to publication figure with the exception of site names due to differential data logging in public domain csv compared to publication. Median values, percentiles, and (no) outliers are all matched.
 
 #### 2.4.2 - Microplastic Counts in Oyster Blanks (Figure 3b)
 
@@ -227,8 +229,8 @@ mp_ob <- mp_counts %>%
   group_by(Region, Sample_ID) %>%
   summarise(Microplastic_Count = n(), .groups = "drop")
 
-#Creating figure __
-ggplot(mp_ob, aes(x = Region, y = log(Microplastic_Count), fill = Region)) +
+#Creating figure 3b
+ggplot(mp_ob, aes(x = Region, y = Microplastic_Count, fill = Region)) +
   geom_boxplot(
     outlier.shape = 10,
     outlier.size = 4)
@@ -239,19 +241,14 @@ ggplot(mp_ob, aes(x = Region, y = log(Microplastic_Count), fill = Region)) +
     y = "Microplastic Count per Sample") +
   theme_minimal()
 #Comparing to the publication figure
-knitr::include_graphics("images/imagename.filetype")
+knitr::include_graphics("images/DataAnalytics_figure3.jpg")
 ```
 
-#### 2.4.3 - Microplastic Counts in Oyster Tissue
+Output Conclusion:
 
-```{r}
-table3 <- mp_counts %>%
-  arrange(MP_color)
-  group_by(Sample_Type == "")
+Due to NA site data for Tbay, Ubay, and Cbay in the publically available csv, the replicated figure does not have blank plots as the publication figure does, rather a NA region to represent lack of data. All three include same outlier representations and median bars in approximate location.
 
-```
-
-#### 2.4.4 - Microplastic Counts in Surface Water Samples
+#### 2.4.3 - Microplastic Counts in Surface Water Samples
 
 ```{r}
 #Creating a new tibble that filters for all surface water samples and creates a column for the amount of microplastic samples found based on each site region
@@ -262,7 +259,7 @@ Figure4a <- mp_counts %>%
   summarise(Microplastic_Count = n(), .groups = "drop")
 
 #Creating figure 4a
-ggplot(Figure4a, aes(x = Region, y = log(Microplastic_Count))) +
+ggplot(Figure4a, aes(x = Region, y = Microplastic_Count)) +
   geom_boxplot(
     outlier.shape = 10,
     outlier.size = 4) +
@@ -270,6 +267,9 @@ ggplot(Figure4a, aes(x = Region, y = log(Microplastic_Count))) +
     title = "Microplastic Counts of Surface Water Samples",
     y = "Microplastic Count") +
   theme_minimal()
+
+#Comparing to the publication figure 4a
+knitr::include_graphics("images/DataAnalytics_figure4.jpg")
 
 ##Creating a new tibble that filters for surface water samples and creates a column for the amount of fiber microplastic samples found based on each site region
 Figure4b <- mp_counts %>%
@@ -279,7 +279,7 @@ Figure4b <- mp_counts %>%
   summarise(Microplastic_Count = n(), .groups = "drop")
 
 #Creating figure 4b
-ggplot(Figure4b, aes(x = Region, y = log(Microplastic_Count))) +
+ggplot(Figure4b, aes(x = Region, y = Microplastic_Count)) +
   geom_boxplot(
     fill = "yellow",
     outlier.shape = 10,
@@ -289,6 +289,9 @@ ggplot(Figure4b, aes(x = Region, y = log(Microplastic_Count))) +
     y = "Microplastic Count") +
   theme_minimal()
 
+#Comparing to the publication figure 4b
+knitr::include_graphics("images/DataAnalytics_figure4.jpg")
+
 #Creating a new tibble that filters for surface water samples and creates a column for the amount of fragment, film, and fiber bundle microplastic samples found based on each site region
 Figure4c <- mp_counts %>%
   filter(Sample_type == "water" & MP_category %in% c("fragment", "film", "fiber bundle")) %>%
@@ -297,7 +300,7 @@ Figure4c <- mp_counts %>%
   summarise(Microplastic_Count = n(), .groups = "drop")
 
 #Creating figure 4c
-ggplot(Figure4c, aes(x = Region, y = log(Microplastic_Count), fill = MP_category)) +
+ggplot(Figure4c, aes(x = Region, y = Microplastic_Count, fill = MP_category)) +
   geom_boxplot(
     fill = "#000080",
     outlier.shape = 10,
@@ -305,15 +308,19 @@ ggplot(Figure4c, aes(x = Region, y = log(Microplastic_Count), fill = MP_category
   labs(
     title = "Fragment, Film, and Fiber Bundle Counts of Surface Water Samples",
     y = "Microplastic Count")
-```
 
-#### 2.4.5 - Microplastic Counts in Oyster Tissue Samples
-
-```{r}
+#Comparing to the publication figure 4c
+knitr::include_graphics("images/DataAnalytics_figure4.jpg")
 
 ```
 
-It was noted in the original publication that "MP counts were adjusted using these blanks, which were calculated by subtracting the mean number of plastics in procedural controls for each color-type category from the oyster totals for that round before analysis. "
+Output Conclusion:
+
+Figure 4a: In contrast to table 2, Ebay and Xbay are separated and some sites are labeled according to full title, resulting in a lack of consistency between data analyses. Besides this, outliers also appear to match sites from original publication figure.
+
+Figure 4b: All factors (percentiles and outliers) are comparable to publication figure, besides the median value at Cbay/Dickinson.
+
+Figure 4c:
 
 ### 2.5 -  Microplastic Chemical Concentration and Composition
 
@@ -324,7 +331,25 @@ It was noted in the original publication that "MP counts were adjusted using the
 PYGCMSMS <- read_csv("https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_PyGCMSMS.csv")
 ```
 
-#### 2.5.1 - 
+#### 2.5.1 - Comparison of Oyster Body Burden by Field Site
+
+```{r}
+#Body Burden = MP(ug)/Dry Weight (g)
+site_obb <- PYGCMSMS %>%
+  mutate("ug" = PMMA + PP + PVC + PA + PC + N66 + PE + PET + ABS + PUR + RUBBER + PS) %>%
+  group_by(Location) %>%
+  select(Location, `Wet _weight_g`, ug)
+
+site_obb <- summarise(
+  site_obb,
+  avg = mean(ug)) 
+```
+
+Output Summary:
+
+Average between site locations matches trend seen in original publication (Xbay \> Ubay \> Ebay) although still difficult to compare given different site names in csv file
+
+#### 2.5.2 - Concentration and Relative Abundance of Microplastics from Py-GCMS/MS
 
 ```{r}
 ##Creating a  tibble that includes location, dry weight (g), and chemical concentrations tested and creating a new column that adds chemical concentrations for each oyster sample
@@ -343,8 +368,56 @@ ggplot(Figure7, aes(x = Location, y = ug)) +
     y = "Concentration (ug/ g DW") 
   
 #Creating figure 7b
-ggplot(Figure7, aes(x = c("PMMA + PP + PVC + PA + PC + N66 + PE + PET + ABS + PUR + RUBBER + PS"), y = ))
+ggplot(PYGCMSMS, aes(x = c("PMMA + PP + PVC + PA + PC + N66 + PE + PET + ABS + PUR + RUBBER + PS"), y = ))
+
+
+#Adjusting table to be able to calculate total abundance
+mp_long <- PYGCMSMS %>%
+  pivot_longer(
+    cols = c(
+      PMMA, PP, PVC, PA, PC, N66,
+      PE, PET, ABS, PUR, RUBBER, PS
+    ),
+    names_to = "microplastic",
+    values_to = "ug")
+
+#Normalizing per sample for relative abundance
+mp_rel <- mp_long %>%
+  group_by(Name, Location) %>%
+  mutate(rel_abundance = ug / sum(ug, na.rm = TRUE)) %>%
+  ungroup()
+
+#Creating Figure 7b
+ggplot(mp_rel, aes(x = microplastic, y = rel_abundance, fill = Location)) +
+  geom_boxplot(
+    position = position_dodge(width = 0.8),
+    outlier.shape = NA,
+    alpha = 0.85) +
+  stat_summary(
+    fun = mean,
+    geom = "point",
+    position = position_dodge(width = 0.8),
+    shape = 21,
+    size = 2.2,
+    color = "green") +
+  stat_summary(
+    fun.data = mean_se,
+    geom = "errorbar",
+    position = position_dodge(width = 0.8),
+    width = 0.2,
+    color = "blue") +
+  labs(
+    x = "Microplastic type",
+    y = "Relative abundance",
+    fill = "Site")
+
+#Comparing to the publication figure 7
+knitr::include_graphics("images/DataAnalytics_figure7.jpg")
 ```
+
+Output Conclusion:
+
+Boxplot has varying difference in visual appearance but comparable analysis occured
 
 ## 3.0 - Discussion and Reflection
 
