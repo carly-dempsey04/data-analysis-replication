@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>data-analysis-replication</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="data-analysis-replication_files/libs/clipboard/clipboard.min.js"></script>
+<script src="data-analysis-replication_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="data-analysis-replication_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="data-analysis-replication_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="data-analysis-replication_files/libs/quarto-html/popper.min.js"></script>
+<script src="data-analysis-replication_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="data-analysis-replication_files/libs/quarto-html/anchor.min.js"></script>
+<link href="data-analysis-replication_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="data-analysis-replication_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="data-analysis-replication_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="data-analysis-replication_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="data-analysis-replication_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">data-analysis-replication</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="data-analysis-replication-project" class="level1">
+<h1>Data Analysis Replication Project</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">1. 0 - Introduction</h2>
+<p>This project aims to replicate the analysis done in Ciesielski <em>et al</em>., 2025 (<a href="https://doi.org/10.3390/jmse13112065" class="uri">https://doi.org/10.3390/jmse13112065</a>). The original paper aims to examine spatial differences in micro- and nano- plastic composition in selectively-filtering oysters and subsequently colonized water ways. Micro- and nano- plastics are becoming of rising concern in public health fields as environmental presence is becoming more apparent as well as potential bioaccumulative properties.</p>
+<p>Oysters, a large industry in the Gulf region, particularly the Texas coast, are selective filter feeders capable of consuming particular material and expelling other matter via pseudo-feces. Significant questions have been raised as 1) Texas coastal waters, due to physical oceanographic processes, have higher concentrations compared to other global coastal regions and 2) oysters have been shown to selectively filter certain plastics from the waters they are inhabitating leading to interesting relationships between plastic concentrations in and out of oysters.</p>
+<section id="analyses-conducted" class="level4">
+<h4 class="anchored" data-anchor-id="analyses-conducted">1.1 - Analyses Conducted</h4>
+<p>This study uses three separate methods of analysis in order to determine oyster health and plastic chemistry/quantity in sites across Galveston Bay, a major industrial region.</p>
+<ol type="1">
+<li><p>Condition Index: a measure of health for oysters that examines soft tissue to overall size.</p>
+<ol type="1">
+<li><p>This was accomplished by shucking the oyster, drying the meat, and measuring followed by a calculation of the internal shell cavity volume (difference in weight between the whole oyster and the weight of the dried empty shell.</p>
+<p>Formula:</p>
+<p><span class="math display">\[
+CI = dry meat weight (g)/ internal shell cavity volume (cm^3
+) * 100\]</span></p></li>
+<li><p>Microplastic Analysis with an Olympus DP27 stereo microscope and camera.</p>
+<ol type="1">
+<li><p>Water and oyster samples were filtered to capture suspected plastic particles.</p></li>
+<li><p>Each particle was categorized by color and type (e.g.&nbsp;fiber, fragment, film, sphere).</p></li>
+<li><p>A randomized subset of samples containing 10% of all particles were chosen using a random number table and imaged under microscopy.</p></li>
+<li><p>The longest length was measured and the subsequent mass was calculated using average density and diameter.</p></li>
+<li><p>From here, measurements of oysters were incorporated to estimate overall concentration of particles per oyster, finding it to be 8% of total oyster mass.</p></li>
+</ol></li>
+<li><p>Microplastic Analysis with Spectroscopy</p>
+<ol type="1">
+<li><p>attenuated total reflectance-Fourier-transform infared (ATR-FTIR) spectroscopy.</p>
+<ol type="1">
+<li>Microplastic characterization using ATR-FTIR spectra to examine general concentrations present in each sample site.</li>
+</ol></li>
+<li><p>pyrolysis-gas chromatography-mass spectrometry with tandem mass (Py-GCMS/MS) spectrometry.</p>
+<ol type="1">
+<li>Measures specific mass per particle per sample.</li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol>
+<p>For this project, the analysis will include the replication of <u><strong>water quality table</strong></u> (Table 2, <em>descriptive statistical analysis</em>), <u><strong>oyster condition index comparison</strong></u> (Figure 2, <em>inferential statistical analysis</em>), <u><strong>microplastic count via microscopy</strong></u> (Figure 3 &amp; 4, <em>visualization</em>), and <u><strong>chemical composition and abundance via PyGCMS/MS</strong></u> (Figure 7, <em>descriptive statistics and visualization</em>).</p>
+</section>
+<section id="data-collection-and-utilization" class="level4">
+<h4 class="anchored" data-anchor-id="data-collection-and-utilization">1.2 - Data Collection and Utilization</h4>
+<p>Samples were taken from six total sites broken down as the following:</p>
+<ul>
+<li><p>Christmas Bay (Xbay): surface water collection &amp; oysters collected for CI measurements and chemical analysis of microplastics</p></li>
+<li><p>West Bay (Wbay): surface water collection &amp; oysters collected for CI measurements</p></li>
+<li><p>East Bay (Ebay): surface water collection &amp; oysters collected for CI measurements and chemical analysis of microplastics</p></li>
+<li><p>Dickinson/Central Bay (Cbay): water collection for chemical analysis &amp; oysters collected for chemical analysis of microplastics</p></li>
+<li><p>Kemah/Seabrook/Upper Bay (Ubay): water collection for chemical analysis</p></li>
+<li><p>Trinity Bay (Tbay): surface water collection</p></li>
+</ul>
+</section>
+<section id="conclusions-of-the-original-study" class="level4">
+<h4 class="anchored" data-anchor-id="conclusions-of-the-original-study">1.3 - Conclusions of the Original Study</h4>
+<p>Results find that water system carried primarily fibers and oysters had an order of magnitude higher of fiber particles that other microplastic particles. The highest abundance of color fragment was clear by large margins, followed by black and blue.</p>
+<p>Chemical composition analyses found that surface waters contained higher volumes of polyamide and polypropylene were more common in upper regions of the bay while ethylene propylene and polyethylene terephthalate were more common in the lower regions of the bay. There appeared to be four distinct plastic types found across the bay: polypropylenem nylon 66m polyethylenem and stryene butadeiene, with polyethylene and styrene butadiene (rubber) making up ~20% of microplastic load in oyster samples. This supports previous hypotheses that oysters will selectively filter different plastic particles.</p>
+<p>Condition Index of oysters found significant differences across sampled reefs with significantly higher oyster CI (theoretically healthier) in East Bay compared to West Bay and Christmas Bay.</p>
+</section>
+<section id="variable-dictionary" class="level4">
+<h4 class="anchored" data-anchor-id="variable-dictionary">1.4 - Variable Dictionary</h4>
+<p>wq (2.2.1): original table for water quality data</p>
+<p>base_d (2.3.0): oyster condition index table not containing any inferential statistics</p>
+<p>snk_CI (2.3.1): tibble containing data from SNK post-hoc test that includes letters indicated significant difference</p>
+<p>mp_counts (2.4.0): microplastic data from microscopy component containing all data from four different sample types (water blanks, oyster blanks, surface water, and oyster tissue)</p>
+<p>mp_wb (2.4.1): microplastic data from water blanks from microscopy experiment</p>
+<p>mp_ob(2.4.2): microplastic data from oyster blanks from microscopy experiment</p>
+<p>mp_sw (2.4.3): all microplastic types from surface water samples from microscopy experiment</p>
+<p>mpf_sw (2.4.3): fiber microplastic types from surface water samples from microscopy experiment</p>
+<p>mpfff_sw (2.4.3): fragment, film, or fiber bundle microplastic types from surface water samples from microscopy experiment</p>
+<p>PYGCMSMS (2.5.0): tibble containing data from PyGCMS/MS experiments containing 10 oyster samples with composition and abundance (ug)</p>
+<p>site_obb (2.5.1): tibble mutated from PyGCMS/MS to calculate for body burden</p>
+<p>Figure7a (2.5.2): tibble mutated from PyGCMS/MS to include total microplastic concentration (ug) for each oyster sample</p>
+<p>mp_long (2.5.2): converting PYGCMSMS tibble from horizontal to vertical</p>
+<p>mp_rel (2.5.2): mutating mp_long to include a column for relative abundance of microplastics per sample</p>
+</section>
+</section>
+<section id="data-analysis-and-visualization-replications" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis-and-visualization-replications">2.0 - Data Analysis and Visualization Replications</h2>
+<section id="preliminary" class="level3">
+<h3 class="anchored" data-anchor-id="preliminary">2.1 - Preliminary</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Adding necessary pacakges to my library</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.1     ✔ tibble    3.3.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+✔ purrr     1.2.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix
+
+Attaching package: 'Matrix'
+
+The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData
+
+Attaching package: 'car'
+
+The following object is masked from 'package:dplyr':
+
+    recode
+
+The following object is masked from 'package:purrr':
+
+    some</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Telling engine where to output all of the figures</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">fig.path =</span> <span class="st">"images/"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="water-quality-table-2" class="level3">
+<h3 class="anchored" data-anchor-id="water-quality-table-2">2.2 - Water Quality (Table 2)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Reading in water quality data from raw github file</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>wq <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_waterquality.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 39 Columns: 12
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (1): Location
+dbl (11): hydro_id, year_, month_, day_, lat_dd, lon_dd, depth, salinity, te...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a preliminary table with the data</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Table2_prelim <span class="ot">&lt;-</span> wq <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Location) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sal_mean =</span> <span class="fu">mean</span>(salinity, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sal_sd =</span> <span class="fu">sd</span>(salinity, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_mean =</span> <span class="fu">mean</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp_sd =</span> <span class="fu">sd</span>(temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">DO_mean =</span> <span class="fu">mean</span>(DO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">DO_sd =</span> <span class="fu">sd</span>(DO, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">depth_mean =</span> <span class="fu">mean</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">depth_sd   =</span> <span class="fu">sd</span>(depth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Table2_prelim)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 9
+  Location  sal_mean sal_sd temp_mean temp_sd DO_mean DO_sd depth_mean depth_sd
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
+1 Dickinson    17.7    7.09      23.6    5.85    7.85  2.09       2.78    0.452
+2 East Bay      9.18   4.66      22.3    7.58    7.38  1.45       2.36    0.391
+3 Kemah        11.2    5.20      21.1    7.53    7.85  2.34       3.29    0.296
+4 Trinity       9.57   5.26      15.3    4.32    8.5   1.15       2.8     0.415
+5 West Bay     20.5    7.91      25.9    7.45    7.08  2.63       1.38    0.432</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a final table for the data</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Table2 <span class="ot">&lt;-</span> Table2_prelim <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Salinity =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(sal_mean, <span class="dv">2</span>), <span class="st">" ± "</span>, <span class="fu">round</span>(sal_sd, <span class="dv">2</span>)),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Temperature =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(temp_mean, <span class="dv">2</span>), <span class="st">" ± "</span>, <span class="fu">round</span>(temp_sd, <span class="dv">2</span>)),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">DO =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(DO_mean, <span class="dv">2</span>), <span class="st">" ± "</span>, <span class="fu">round</span>(DO_sd, <span class="dv">2</span>)),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Depth =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(depth_mean, <span class="dv">2</span>), <span class="st">" ± "</span>, <span class="fu">round</span>(depth_sd, <span class="dv">2</span>))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Location, Salinity, Temperature, DO, Depth)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Table2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  Location  Salinity     Temperature  DO          Depth      
+  &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;      
+1 Dickinson 17.73 ± 7.09 23.58 ± 5.85 7.85 ± 2.09 2.78 ± 0.45
+2 East Bay  9.18 ± 4.66  22.32 ± 7.58 7.38 ± 1.45 2.36 ± 0.39
+3 Kemah     11.18 ± 5.2  21.12 ± 7.53 7.85 ± 2.34 3.29 ± 0.3 
+4 Trinity   9.57 ± 5.26  15.33 ± 4.32 8.5 ± 1.15  2.8 ± 0.41 
+5 West Bay  20.54 ± 7.91 25.86 ± 7.45 7.08 ± 2.63 1.38 ± 0.43</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">##NOTE: dataset did not include Christmas Bay water quality collection, which is found on Table 2 of the original publication</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><u><strong>Output Conclusion:</strong></u></p>
+<p>Replication of table 2 that shows water conditions across the different locations as follows: Dickinson (Cbay), East Bay (Ebay), Kemah (Ubay), Trinity Bay (Tbay), West Bay (Wbay). Christmas Bay (Xbay) is included on the original publication and yet the excel files associated do not contain data from this location. This is likely due to Xbay being an embankment of East Bay leading the conditions to be combined. Although this is an understandable filing, it does complicate replication.</p>
+</section>
+<section id="oyster-condition-index-across-sites" class="level3">
+<h3 class="anchored" data-anchor-id="oyster-condition-index-across-sites">2.3 - Oyster Condition Index Across Sites</h3>
+<section id="preliminaries" class="level4">
+<h4 class="anchored" data-anchor-id="preliminaries">2.3.0 - Preliminaries</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading in my csv containing oyster condition index values</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>oysterci <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_CI.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 109 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): Location
+dbl (2): Oyster_Number, CI
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Building the framework tibble for the analyses including mean CI &amp; standard deviation all grouped by site location</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>base_d <span class="ot">&lt;-</span> oysterci <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Location) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_CI =</span> <span class="fu">mean</span>(CI, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">se_CI =</span> <span class="fu">sd</span>(CI, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()), <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(base_d) <span class="co">#double checking class for left joining</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+</section>
+<section id="oyster-conditions-index-values-by-sampling-location-figure-2" class="level4">
+<h4 class="anchored" data-anchor-id="oyster-conditions-index-values-by-sampling-location-figure-2">2.3.1 - Oyster Conditions Index Values by Sampling Location (Figure 2)</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Running my ANOVA followed by the Student-Newman-Keuls (snk) post-hoc test</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>(lm_CI <span class="ot">&lt;-</span> <span class="fu">lm</span>(CI <span class="sc">~</span> Location, <span class="at">data =</span> oysterci))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = CI ~ Location, data = oysterci)
+
+Coefficients:
+ (Intercept)  LocationEB-2  LocationWB-1  LocationWB-2  LocationWB-3  
+      11.862        -1.281        -6.183        -5.955        -5.449  
+LocationXB-1  LocationXB-2  LocationXB-3  
+      -4.689        -3.248        -4.444  </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(anova_CI <span class="ot">&lt;-</span> <span class="fu">aov</span>(CI <span class="sc">~</span> Location, <span class="at">data =</span> oysterci))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+   aov(formula = CI ~ Location, data = oysterci)
+
+Terms:
+                Location Residuals
+Sum of Squares  353.2531  261.7800
+Deg. of Freedom        7       101
+
+Residual standard error: 1.609932
+Estimated effects may be unbalanced</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(snk_CI <span class="ot">&lt;-</span> <span class="fu">SNK.test</span>(anova_CI, <span class="st">"Location"</span>, <span class="at">group =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$statistics
+   MSerror  Df     Mean       CV
+  2.591881 101 7.573572 21.25723
+
+$parameters
+  test   name.t ntr alpha
+   SNK Location   8  0.05
+
+$snk
+NULL
+
+$means
+            CI       std  r        se       Min       Max       Q25       Q50
+EB-1 11.862128 1.7662643  5 0.7199835 10.104860 14.811130 11.218990 11.332830
+EB-2 10.581026 1.4985318 14 0.4302724  7.061791 12.881140  9.758224 10.963645
+WB-1  5.679052 1.8708753 15 0.4156826  1.906722  9.284116  4.609099  5.627512
+WB-2  5.907567 1.5858680 15 0.4156826  4.464286 10.081300  4.840748  5.594901
+WB-3  6.413275 0.9773196 15 0.4156826  4.513274  7.861369  5.819214  6.560450
+XB-1  7.173409 1.0790351 15 0.4156826  5.487805  9.540636  6.652779  7.039711
+XB-2  8.613935 2.4589264 15 0.4156826  2.049180 12.765960  7.796303  8.459215
+XB-3  7.417717 1.2414065 15 0.4156826  5.964912 11.407770  6.903192  7.279693
+           Q75
+EB-1 11.842830
+EB-2 11.299870
+WB-1  6.999849
+WB-2  5.994552
+WB-3  7.016264
+XB-1  7.788308
+XB-2  9.167303
+XB-3  7.739013
+
+$comparison
+NULL
+
+$groups
+            CI groups
+EB-1 11.862128      a
+EB-2 10.581026      a
+XB-2  8.613935      b
+XB-3  7.417717     bc
+XB-1  7.173409     bc
+WB-3  6.413275      c
+WB-2  5.907567      c
+WB-1  5.679052      c
+
+attr(,"class")
+[1] "group"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Pulling the values from the SNK post-hoc test </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>snk_CI_letters <span class="ot">&lt;-</span> snk_CI<span class="sc">$</span>groups <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"Location"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">letter =</span> groups)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(snk_CI_letters) <span class="co">#double checking class for left joining</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Finally using my joins - connecting my base data to the SNK post-hoc</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>Figure2 <span class="ot">&lt;-</span> base_d <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(snk_CI_letters, <span class="at">by =</span> <span class="st">"Location"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Figure2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  Location mean_CI se_CI     n    CI letter
+  &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; 
+1 EB-1       11.9  0.790     5 11.9  a     
+2 EB-2       10.6  0.400    14 10.6  a     
+3 WB-1        5.68 0.483    15  5.68 c     
+4 WB-2        5.91 0.409    15  5.91 c     
+5 WB-3        6.41 0.252    15  6.41 c     
+6 XB-1        7.17 0.279    15  7.17 bc    </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#THis better work - plotting according to figure 2</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Figure2, <span class="fu">aes</span>(<span class="at">x =</span> Location, <span class="at">y =</span> mean_CI)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"pink"</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_CI <span class="sc">-</span> se_CI, <span class="at">ymax =</span> mean_CI <span class="sc">+</span> se_CI),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(n)),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">vjust =</span> <span class="fl">1.5</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"#000080"</span>,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"jitter"</span>,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> letter, <span class="at">y =</span> mean_CI <span class="sc">+</span> se_CI <span class="sc">+</span> <span class="fl">0.05</span>),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">5</span>,</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"#000080"</span>) <span class="sc">+</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sampling Location"</span>, <span class="at">y =</span> <span class="st">"mean oyster condition index"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Comparing to the Publication Figure</strong></u></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/DataAnalytics_figure2.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/DataAnalytics_figure2.jpg" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Output Conclusion:</strong></u></p>
+<p>This boxplot, replicating Figure 2 of the original publication, contains the Oyster Condition Index values (mean &amp; sd) from six sampled oyster reefs (two in Ebay, three in WBay, and three in XBay). Plot additional statistics (error bars, replicate number, and statistical difference) all match original publication results (but prettier colors). Values from ANOVA and SNK post-hoc match that of original publication.</p>
+</section>
+</section>
+<section id="microplastic-counts" class="level3">
+<h3 class="anchored" data-anchor-id="microplastic-counts">2.4 - Microplastic Counts</h3>
+<section id="preliminaries-1" class="level4">
+<h4 class="anchored" data-anchor-id="preliminaries-1">2.4.0 - Preliminaries</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading in my csv that contains all the microplastic measurement information</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>mp_counts <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_MPmeasure.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1776 Columns: 10
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (8): Season, Region, Site_ID, Sample_type, Sample_ID, Filter_ID, MP_cate...
+dbl (2): Filter_no, Length_mm
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+</section>
+<section id="microplastic-counts-in-water-blanks-figure-3a" class="level4">
+<h4 class="anchored" data-anchor-id="microplastic-counts-in-water-blanks-figure-3a">2.4.1 - Microplastic Counts in Water Blanks (Figure 3a)</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a new tibble that filters for all water blank samples and creates a column for the amount of microplastic samples found based on each site region</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>mp_wb <span class="ot">&lt;-</span> mp_counts <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sample_type <span class="sc">==</span> <span class="st">"waterblank"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Microplastic_Count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mp_wb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Region Sample_ID        Microplastic_Count
+  &lt;chr&gt;  &lt;chr&gt;                         &lt;int&gt;
+1 Dksn   Dksn1_waterblank                  5
+2 Dksn   Dksn2_waterblank                  3
+3 Dksn   Dksn3_waterblank                  3
+4 Ebay   Ebay1_waterblank                  3
+5 Ebay   Ebay2_waterblank                  6
+6 Ebay   Ebay3_waterblank                  6</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating figure 3a</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mp_wb, <span class="fu">aes</span>(<span class="at">x =</span> Region, <span class="at">y =</span> <span class="fu">log</span>(Microplastic_Count), <span class="at">fill =</span> Region)) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="dv">10</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set3"</span>) <span class="sc">+</span>  </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Microplastic Counts of Water Blanks by Region"</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Site"</span>,</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Microplastic Count per Sample"</span>) <span class="sc">+</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Comparing to the Publication Figure</strong></u></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/DataAnalytics_figure3.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/DataAnalytics_figure3.jpg" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Output Conclusions:</strong></u></p>
+<p>Figure appears comparable to publication figure with the exception of site names due to differential data logging in public domain csv compared to publication. Median values, percentiles, and (no) outliers are all matched.</p>
+</section>
+<section id="microplastic-counts-in-oyster-blanks-figure-3b" class="level4">
+<h4 class="anchored" data-anchor-id="microplastic-counts-in-oyster-blanks-figure-3b">2.4.2 - Microplastic Counts in Oyster Blanks (Figure 3b)</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a new tibble that filters for all oyster blank samples and creates a column for the amount of microplastic samples found based on each site region</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>mp_ob <span class="ot">&lt;-</span> mp_counts <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sample_type <span class="sc">==</span> <span class="st">"oysterblank"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Microplastic_Count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mp_ob)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Region Sample_ID          Microplastic_Count
+  &lt;chr&gt;  &lt;chr&gt;                           &lt;int&gt;
+1 Ebay   Ebay2_oysterblank1                  3
+2 Ebay   Ebay2_oysterblank2                  8
+3 Ebay   Ebay2_oysterblank3                  4
+4 Ebay   Ebay4_oysterblank1                 12
+5 Ebay   Ebay4_oysterblank2                  5
+6 Ebay   Ebay4_oysterblank3                  3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating figure 3b</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mp_ob, <span class="fu">aes</span>(<span class="at">x =</span> Region, <span class="at">y =</span> Microplastic_Count, <span class="at">fill =</span> Region)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="dv">10</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set3"</span>) <span class="sc">+</span>  </span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Microplastic Counts of Oyster Blanks by Region"</span>,</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Region"</span>,</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Microplastic Count per Sample"</span>) <span class="sc">+</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Comparing to the Publication Figure</strong></u></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/DataAnalytics_figure3.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/DataAnalytics_figure3.jpg" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Output Conclusion:</strong></u></p>
+<p>Due to NA site data for Tbay, Ubay, and Cbay in the publically available csv, the replicated figure does not have blank plots as the publication figure does, rather a NA region to represent lack of data. All three include same outlier representations and median bars in approximate location.</p>
+</section>
+<section id="microplastic-counts-in-surface-water-samples" class="level4">
+<h4 class="anchored" data-anchor-id="microplastic-counts-in-surface-water-samples">2.4.3 - Microplastic Counts in Surface Water Samples</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a new tibble that filters for all surface water samples and creates a column for the amount of microplastic samples found based on each site region</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>mp_sw <span class="ot">&lt;-</span> mp_counts <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sample_type <span class="sc">==</span> <span class="st">"water"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Microplastic_Count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mp_sw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Region Sample_ID    Microplastic_Count
+  &lt;chr&gt;  &lt;chr&gt;                     &lt;int&gt;
+1 Dksn   Dksn1_water1                  3
+2 Dksn   Dksn1_water2                  2
+3 Dksn   Dksn1_water3                  4
+4 Dksn   Dksn2_water1                  3
+5 Dksn   Dksn2_water2                  4
+6 Dksn   Dksn2_water3                  2</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating figure 4a</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mp_sw, <span class="fu">aes</span>(<span class="at">x =</span> Region, <span class="at">y =</span> Microplastic_Count)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="dv">10</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Microplastic Counts of Surface Water Samples"</span>,</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Microplastic Count"</span>) <span class="sc">+</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Creating a new tibble that filters for surface water samples and creates a column for the amount of fiber microplastic samples found based on each site region</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>mpf_sw <span class="ot">&lt;-</span> mp_counts <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sample_type <span class="sc">==</span> <span class="st">"water"</span> <span class="sc">&amp;</span> MP_category <span class="sc">==</span> <span class="st">"fiber"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Microplastic_Count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mpf_sw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Region Sample_ID    Microplastic_Count
+  &lt;chr&gt;  &lt;chr&gt;                     &lt;int&gt;
+1 Dksn   Dksn1_water1                  2
+2 Dksn   Dksn1_water2                  2
+3 Dksn   Dksn1_water3                  2
+4 Dksn   Dksn2_water1                  3
+5 Dksn   Dksn2_water2                  2
+6 Dksn   Dksn2_water3                  2</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating figure 4b</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpf_sw, <span class="fu">aes</span>(<span class="at">x =</span> Region, <span class="at">y =</span> Microplastic_Count)) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"yellow"</span>,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="dv">10</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fiber MP Counts of Surface Water Samples"</span>,</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Microplastic Count"</span>) <span class="sc">+</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/unnamed-chunk-11-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a new tibble that filters for surface water samples and creates a column for the amount of fragment, film, and fiber bundle microplastic samples found based on each site region</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>mpfff_sw <span class="ot">&lt;-</span> mp_counts <span class="sc">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sample_type <span class="sc">==</span> <span class="st">"water"</span> <span class="sc">&amp;</span> MP_category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"fragment"</span>, <span class="st">"film"</span>, <span class="st">"fiber bundle"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Sample_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Microplastic_Count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mpfff_sw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Region Sample_ID    Microplastic_Count
+  &lt;chr&gt;  &lt;chr&gt;                     &lt;int&gt;
+1 Dksn   Dksn1_water1                  1
+2 Dksn   Dksn1_water3                  2
+3 Dksn   Dksn2_water2                  2
+4 Dksn   Dksn3_water1                  2
+5 Dksn   Dksn3_water2                  3
+6 Dksn   Dksn3_water3                  1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating figure 4c</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpfff_sw, <span class="fu">aes</span>(<span class="at">x =</span> Region, <span class="at">y =</span> Microplastic_Count, <span class="at">fill =</span> MP_category)) <span class="sc">+</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"#000080"</span>,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="dv">10</span>,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fragment, Film, and Fiber Bundle Counts of Surface Water Samples"</span>,</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Microplastic Count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/unnamed-chunk-11-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Comparing to the Publication Figure</strong></u></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/DataAnalytics_figure4.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/DataAnalytics_figure4.jpg" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Output Conclusion:</strong></u></p>
+<p>Figure 4a: In contrast to table 2, Ebay and Xbay are separated and some sites are labeled according to full title, resulting in a lack of consistency between data analyses. Besides this, outliers also appear to match sites from original publication figure.</p>
+<p>Figure 4b: All factors (percentiles and outliers) are comparable to publication figure, besides the median value at Cbay/Dickinson.</p>
+<p>Figure 4c: All factors (percentiles and outliers) are comparable to publication figure although formatting is different.</p>
+</section>
+</section>
+<section id="microplastic-chemical-concentration-and-composition" class="level3">
+<h3 class="anchored" data-anchor-id="microplastic-chemical-concentration-and-composition">2.5 - Microplastic Chemical Concentration and Composition</h3>
+<section id="preliminaries-2" class="level4">
+<h4 class="anchored" data-anchor-id="preliminaries-2">2.5.0 - Preliminaries</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading in my csv that contains all the microplastic PGYCMS/MS information</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>PYGCMSMS <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/carly-dempsey04/data-analysis-replication/refs/heads/main/data/data_PyGCMSMS.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 10 Columns: 18
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (2): Name, Location
+dbl (16): LATITUDE, LONGITUDE, Wet _weight_g, Dry_weight_g, PMMA, PP, PVC, P...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+</section>
+<section id="comparison-of-oyster-body-burden-by-field-site" class="level4">
+<h4 class="anchored" data-anchor-id="comparison-of-oyster-body-burden-by-field-site">2.5.1 - Comparison of Oyster Body Burden by Field Site</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Body Burden = MP(ug)/Dry Weight (g)</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>site_obb <span class="ot">&lt;-</span> PYGCMSMS <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"ug"</span> <span class="ot">=</span> PMMA <span class="sc">+</span> PP <span class="sc">+</span> PVC <span class="sc">+</span> PA <span class="sc">+</span> PC <span class="sc">+</span> N66 <span class="sc">+</span> PE <span class="sc">+</span> PET <span class="sc">+</span> ABS <span class="sc">+</span> PUR <span class="sc">+</span> RUBBER <span class="sc">+</span> PS) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Location) <span class="sc">%&gt;%</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Location, <span class="st">`</span><span class="at">Wet _weight_g</span><span class="st">`</span>, ug)</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>site_obb <span class="ot">&lt;-</span> <span class="fu">summarise</span>(</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  site_obb,</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">avg =</span> <span class="fu">mean</span>(ug)) </span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(site_obb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Location    avg
+  &lt;chr&gt;     &lt;dbl&gt;
+1 East Bay  3504.
+2 Galv Bay  5747.
+3 Xmas Bay 29543.</code></pre>
+</div>
+</div>
+<p><u><strong>Output Conclusion:</strong></u></p>
+<p>Average between site locations matches trend seen in original publication (Xbay &gt; Ubay &gt; Ebay) although still difficult to compare given different site names in csv file.</p>
+</section>
+<section id="concentration-and-relative-abundance-of-microplastics-from-py-gcmsms" class="level4">
+<h4 class="anchored" data-anchor-id="concentration-and-relative-abundance-of-microplastics-from-py-gcmsms">2.5.2 - Concentration and Relative Abundance of Microplastics from Py-GCMS/MS</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Creating a  tibble that includes location, dry weight (g), and chemical concentrations tested and creating a new column that adds chemical concentrations for each oyster sample</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>Figure7a <span class="ot">&lt;-</span> PYGCMSMS <span class="sc">%&gt;%</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Location, Dry_weight_g, PMMA, PP, PVC, PA, PC, N66, PE, PET, ABS, PUR, RUBBER, PS) <span class="sc">%&gt;%</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"ug"</span> <span class="ot">=</span> PMMA <span class="sc">+</span> PP <span class="sc">+</span> PVC <span class="sc">+</span> PA <span class="sc">+</span> PC <span class="sc">+</span> N66 <span class="sc">+</span> PE <span class="sc">+</span> PET <span class="sc">+</span> ABS <span class="sc">+</span> PUR <span class="sc">+</span> RUBBER <span class="sc">+</span> PS) <span class="sc">%&gt;%</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Location)</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating figure 7a</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Figure7a, <span class="fu">aes</span>(<span class="at">x =</span> Location, <span class="at">y =</span> ug)) <span class="sc">+</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="dv">10</span>,</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Concentration of MP in Oyster Tissue"</span>,</span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Concentration (ug/ g DW"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Adjusting table to be able to calculate total abundance</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>mp_long <span class="ot">&lt;-</span> PYGCMSMS <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>      PMMA, PP, PVC, PA, PC, N66,</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>      PE, PET, ABS, PUR, RUBBER, PS</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"microplastic"</span>,</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"ug"</span>)</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Normalizing per sample for relative abundance</span></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>mp_rel <span class="ot">&lt;-</span> mp_long <span class="sc">%&gt;%</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Name, Location) <span class="sc">%&gt;%</span></span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rel_abundance =</span> ug <span class="sc">/</span> <span class="fu">sum</span>(ug, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mp_rel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+  Name  Location LATITUDE LONGITUDE `Wet _weight_g` Dry_weight_g microplastic
+  &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;       
+1 OyG1  East Bay     29.5     -94.6              12         1.49 PMMA        
+2 OyG1  East Bay     29.5     -94.6              12         1.49 PP          
+3 OyG1  East Bay     29.5     -94.6              12         1.49 PVC         
+4 OyG1  East Bay     29.5     -94.6              12         1.49 PA          
+5 OyG1  East Bay     29.5     -94.6              12         1.49 PC          
+6 OyG1  East Bay     29.5     -94.6              12         1.49 N66         
+# ℹ 2 more variables: ug &lt;dbl&gt;, rel_abundance &lt;dbl&gt;</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating Figure 7b</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mp_rel, <span class="fu">aes</span>(<span class="at">x =</span> microplastic, <span class="at">y =</span> rel_abundance, <span class="at">fill =</span> Location)) <span class="sc">+</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.8</span>),</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="cn">NA</span>,</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> mean,</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.8</span>),</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.2</span>,</span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"green"</span>) <span class="sc">+</span></span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.data =</span> mean_se,</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"errorbar"</span>,</span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.8</span>),</span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Microplastic type"</span>,</span>
+<span id="cb58-22"><a href="#cb58-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Relative abundance"</span>,</span>
+<span id="cb58-23"><a href="#cb58-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Site"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Comparing to the Publication Figure</strong></u></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/DataAnalytics_figure7.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="images/DataAnalytics_figure7.jpg" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><u><strong>Output Conclusion:</strong></u></p>
+<p>Boxplot has varying difference in visual appearance but comparable analysis occurred.</p>
+</section>
+</section>
+</section>
+<section id="discussion-and-reflection" class="level2">
+<h2 class="anchored" data-anchor-id="discussion-and-reflection">3.0 - Discussion and Reflection</h2>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">3.1 - Summary</h3>
+<p>Report includes a narrative summary about how successful the analysis replications were or were not - i.e., how well do the replicated results compare to those presented in the original paper?</p>
+<p>This project resulted in a successful replication of data output from the original publication across all four analyses with only slight differentiation in visual results. The water quality results differ from the original publication, likely connected to why the downloaded csv does not contain depth variables. Additional supplemented data was likely used for the publication, reducing reproducability. Oyster CI remains the same as the original publication and appears to be the most detailed in reporting, ensuring all variables to generate CI data is on csv. Labels for site locations begin to differ from the original publication, requiring either manipulation of the data or further analysis, with the latter being chosen for this project. Data from microscopy experiments follows a similar outcome with label differences but resulting in the same statistical summation. PyGCMS/MS follows a very easy to follow reproducible analysis but requires additional formulations in order to replicate results.</p>
+</section>
+<section id="challenges-encountered" class="level3">
+<h3 class="anchored" data-anchor-id="challenges-encountered">3.2 - Challenges Encountered</h3>
+<ul>
+<li><p>Differing site/location names throughout publicly available</p></li>
+<li><p>In depth understanding of sampling methodology required in order to understand what statistical tests are required to standardize/normalize results</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
