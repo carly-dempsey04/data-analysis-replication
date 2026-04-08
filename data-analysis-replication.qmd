@@ -473,9 +473,7 @@ Boxplot has varying difference in visual appearance but comparable analysis occu
 
 ## 3.0 - Discussion and Reflection
 
-### 3.1 - Summary
-
-Report includes a narrative summary about how successful the analysis replications were or were not - i.e., how well do the replicated results compare to those presented in the original paper?
+### 3.1 - Project Summary
 
 This project resulted in a successful replication of data output from the original publication across all four analyses with only slight differentiation in visual results. The water quality results differ from the original publication, likely connected to why the downloaded csv does not contain depth variables. Additional supplemented data was likely used for the publication, reducing reproducability. Oyster CI remains the same as the original publication and appears to be the most detailed in reporting, ensuring all variables to generate CI data is on csv. Labels for site locations begin to differ from the original publication, requiring either manipulation of the data or further analysis, with the latter being chosen for this project. Data from microscopy experiments follows a similar outcome with label differences but resulting in the same statistical summation. PyGCMS/MS follows a very easy to follow reproducible analysis but requires additional formulations in order to replicate results.
 
